@@ -28,6 +28,9 @@ apikeys:
   dnsdumpster:
     key:
 
+  dymo:
+    key:
+
   fofa:
     key:
     email:

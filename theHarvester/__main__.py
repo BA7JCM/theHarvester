@@ -30,6 +30,7 @@ from theHarvester.discovery import (
     crtsh,
     dnssearch,
     duckduckgosearch,
+    dymosearch,
     fofa,
     fullhuntsearch,
     githubcode,
@@ -196,7 +197,7 @@ async def start(rest_args: argparse.Namespace | None = None):
         '-b',
         '--source',
         help="""baidu, bevigil, bitbucket, brave, bufferoverun,
-                            builtwith, censys, certspotter, chaos, commoncrawl, criminalip, crtsh, dehashed, dnsdumpster, duckduckgo, fofa, fullhunt, github-code,
+                            builtwith, censys, certspotter, chaos, commoncrawl, criminalip, crtsh, dehashed, dnsdumpster, duckduckgo, dymo, fofa, fullhunt, github-code,
                             gitlab, hackertarget, haveibeenpwned, hudsonrock, hunter, hunterhow, intelx, leakix, leaklookup, mojeek, netlas, onyphe, otx, pentesttools,
                             projectdiscovery, rapiddns, robtex, rocketreach, securityscorecard, securityTrails, shodan, subdomaincenter,
                             subdomainfinderc99, thc, threatcrowd, tomba, urlscan, venacus, virustotal, waybackarchive, whoisxml, windvane, yahoo, zoomeye""",
@@ -663,6 +664,17 @@ async def start(rest_args: argparse.Namespace | None = None):
                             store_emails=True,
                         )
                     )
+
+                elif engineitem == 'dymo':
+                    try:
+                        dymo_search = dymosearch.SearchDymo(word)
+                        stor_lst.append(store(dymo_search, engineitem, store_host=True))
+                    except Exception as e:
+                        if isinstance(e, MissingKey):
+                            if not args.quiet:
+                                print(f'A Missing Key error occurred in dymo: {e}')
+                        else:
+                            show_default_error_message(engineitem, word, e)
 
                 elif engineitem == 'fofa':
                     try:
