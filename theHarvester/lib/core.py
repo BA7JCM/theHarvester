@@ -265,8 +265,7 @@ class Core:
 
     @staticmethod
     def get_supportedengines() -> list[str]:
-        """Returns a list of supported search engines.
-        """
+        """Returns a list of supported search engines."""
         return [
             'baidu',
             'bevigil',

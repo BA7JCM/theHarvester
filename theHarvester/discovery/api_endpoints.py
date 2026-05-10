@@ -47,8 +47,7 @@ class EndpointResult:
 
 
 class SearchApiEndpoints:
-    """SearchApiEndpoints class for scanning common API endpoints on target domains.
-    """
+    """SearchApiEndpoints class for scanning common API endpoints on target domains."""
 
     def __init__(
         self,
@@ -388,8 +387,7 @@ class SearchApiEndpoints:
         self.logger = logger
 
     async def do_search(self) -> None:
-        """Perform the API endpoint scan with advanced features.
-        """
+        """Perform the API endpoint scan with advanced features."""
         try:
             self.logger.info(f'Starting API endpoint scan for {self.word}')
 

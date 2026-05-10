@@ -17,8 +17,7 @@ except (AttributeError, OSError, RuntimeError, SystemError, ValueError) as e:
 
 
 class SearchRobtex:
-    """Class uses the Robtex passive DNS API to gather subdomains
-    """
+    """Class uses the Robtex passive DNS API to gather subdomains"""
 
     def __init__(self, word) -> None:
         self.word = word

@@ -1,5 +1,4 @@
-"""Example script to query theHarvester rest API, obtain results, and write out to stdout as well as an html
-"""
+"""Example script to query theHarvester rest API, obtain results, and write out to stdout as well as an html"""
 
 import asyncio
 

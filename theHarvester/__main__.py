@@ -1639,7 +1639,9 @@ async def start(rest_args: argparse.Namespace | None = None):
                 for x in full:
                     host, ip = x.split(':', 1) if ':' in x else (x, '')
                     if ip and len(ip) > 3:
-                        await file.write(f'<host><ip>{sanitize_for_xml(ip)}</ip><hostname>{sanitize_for_xml(host)}</hostname></host>')
+                        await file.write(
+                            f'<host><ip>{sanitize_for_xml(ip)}</ip><hostname>{sanitize_for_xml(host)}</hostname></host>'
+                        )
                     else:
                         await file.write(f'<host>{sanitize_for_xml(host)}</host>')
                 for x in vhost:

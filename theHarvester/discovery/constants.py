@@ -106,8 +106,7 @@ async def google_workaround(visit_url: str) -> bool | str:
 
 
 class MissingKeyError(Exception):
-    """:raise: When there is a module that has not been provided its API key
-    """
+    """:raise: When there is a module that has not been provided its API key"""
 
     def __init__(self, source: str | None) -> None:
         if source:

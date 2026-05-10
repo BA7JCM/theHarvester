@@ -199,7 +199,9 @@ async def dnsbrute(
     request: Request,
     user_agent: Annotated[str | None, Header()] = None,
     domain: Annotated[str, Query(description='Domain to be brute forced')] = ...,
-    dns_resolve: Annotated[str, Query(description='Perform DNS resolution on subdomains with a resolver list or passed in resolvers')] = '',
+    dns_resolve: Annotated[
+        str, Query(description='Perform DNS resolution on subdomains with a resolver list or passed in resolvers')
+    ] = '',
 ) -> Response:
     """Endpoint for DNS brute forcing.
 
@@ -273,7 +275,9 @@ async def query(
     user_agent: Annotated[str | None, Header()] = None,
     dns_brute: Annotated[bool, Query(description='Perform a DNS brute force on the domain')] = False,
     dns_lookup: Annotated[bool, Query(description='Enable DNS server lookup')] = False,
-    dns_resolve: Annotated[str, Query(description='Perform DNS resolution on subdomains with a resolver list or passed in resolvers')] = '',
+    dns_resolve: Annotated[
+        str, Query(description='Perform DNS resolution on subdomains with a resolver list or passed in resolvers')
+    ] = '',
     filename: Annotated[str, Query(description='Save the results to an XML and JSON file')] = '',
     proxies: Annotated[bool, Query(description='Use proxies for requests')] = False,
     shodan: Annotated[bool, Query(description='Use Shodan to query discovered hosts')] = False,

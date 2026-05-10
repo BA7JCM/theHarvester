@@ -75,11 +75,14 @@ class ScreenShotter:
             else:
                 connector = aiohttp.TCPConnector(ssl=sslcontext)
 
-            async with aiohttp.ClientSession(
-                timeout=timeout,
-                headers=headers,
-                connector=connector,
-            ) as session, session.get(url, ssl=False, proxy=proxy_param) as resp:
+            async with (
+                aiohttp.ClientSession(
+                    timeout=timeout,
+                    headers=headers,
+                    connector=connector,
+                ) as session,
+                session.get(url, ssl=False, proxy=proxy_param) as resp,
+            ):
                 text = await resp.text('UTF-8')
                 return f'http://{url}' if not url.startswith('http') else url, text
         except Exception as e:
