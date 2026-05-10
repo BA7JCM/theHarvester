@@ -317,6 +317,7 @@ class Core:
             'securityscorecard',
             'securityTrails',
             'shodan',
+            'shodanInternetDB',
             'subdomaincenter',
             'subdomainfinderc99',
             'sublist3r',

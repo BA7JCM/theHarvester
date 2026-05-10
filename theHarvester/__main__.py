@@ -56,6 +56,7 @@ from theHarvester.discovery import (
     searchhunterhow,
     securityscorecard,
     securitytrailssearch,
+    shodan_internetdb,
     shodansearch,
     subdomaincenter,
     subdomainfinderc99,
@@ -199,7 +200,7 @@ async def start(rest_args: argparse.Namespace | None = None):
         help="""baidu, bevigil, bitbucket, brave, bufferoverun,
                             builtwith, censys, certspotter, chaos, commoncrawl, criminalip, crtsh, dehashed, dnsdumpster, duckduckgo, dymo, fofa, fullhunt, github-code,
                             gitlab, hackertarget, haveibeenpwned, hudsonrock, hunter, hunterhow, intelx, leakix, leaklookup, mojeek, netlas, onyphe, otx, pentesttools,
-                            projectdiscovery, rapiddns, robtex, rocketreach, securityscorecard, securityTrails, shodan, subdomaincenter,
+                            projectdiscovery, rapiddns, robtex, rocketreach, securityscorecard, securityTrails, shodan, shodanInternetDB, subdomaincenter,
                             subdomainfinderc99, thc, threatcrowd, tomba, urlscan, venacus, virustotal, waybackarchive, whoisxml, windvane, yahoo, zoomeye""",
     )
 
@@ -1078,6 +1079,27 @@ async def start(rest_args: argparse.Namespace | None = None):
                                 print(f'A Missing Key error occurred in Shodan search: {e}')
                         else:
                             print(f'An exception has occurred in Shodan search: {e}')
+
+                elif engineitem == 'shodanInternetDB':
+                    try:
+                        shodanidb_search = shodan_internetdb.SearchShodanInternetDB(word)
+                        stor_lst.append(
+                            store(
+                                shodanidb_search,
+                                engineitem,
+                                store_host=True,
+                                store_ip=True,
+                            )
+                        )
+                    except ConnectionError as ce:
+                        if not args.quiet:
+                            print(f'Network connection error while accessing Shodan InternetDB: {ce}')
+                    except TimeoutError as te:
+                        if not args.quiet:
+                            print(f'Request to Shodan InternetDB timed out: {te}')
+                    except Exception as e:
+                        if not args.quiet:
+                            print(f'Unexpected error occurred in Shodan InternetDB module: {e}')
 
                 elif engineitem == 'subdomaincenter':
                     try:
