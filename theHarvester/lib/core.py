@@ -40,6 +40,7 @@ class Core:
         'criminalip': ('key',),
         'dehashed': ('key',),
         'dnsdumpster': ('key',),
+        'dymo': ('key',),
         'fofa': ('key', 'email'),
         'fullhunt': ('key',),
         'github': ('key',),
@@ -133,6 +134,10 @@ class Core:
     @staticmethod
     def dnsdumpster_key() -> str:
         return Core._api_key_value('dnsdumpster')
+
+    @staticmethod
+    def dymo_key() -> str:
+        return Core._api_key_value('dymo')
 
     @staticmethod
     def fofa_key() -> tuple[str, str]:
@@ -282,6 +287,7 @@ class Core:
             'dehashed',
             'dnsdumpster',
             'duckduckgo',
+            'dymo',
             'fofa',
             'fullhunt',
             'github-code',

@@ -87,6 +87,8 @@ Passive modules
 
 * duckduckgo: DuckDuckGo search engine (https://duckduckgo.com)
 
+* dymo: Dymo API data verifier - confirms domains, surfaces typo suggestions and MX/fraud signals (https://dymo.tpeoficial.com)
+
 * fofa: FOFA search eingine (https://en.fofa.info)
 
 * fullhunt: Next-generation attack surface security platform (https://fullhunt.io)
@@ -170,6 +172,7 @@ Documentation to setup API keys can be found at - https://github.com/laramies/th
 * criminalip - 100 free queries/month. 700k/month $59
 * dehashed - 500 credts $15, 5k credits $150
 * dnsdumpster - 50 free querries/day, $49
+* dymo - free tier available, paid plans for higher limits
 * fofa - query credits 10,000/month. 100k results/month $25
 * fullhunt - 50 free queries. 200 queries $29/month, 500 queries $59 
 * github-code
