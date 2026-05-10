@@ -3,7 +3,6 @@
 ![TheHarvester CI](https://github.com/laramies/theHarvester/workflows/TheHarvester%20Python%20CI/badge.svg) ![TheHarvester Docker Image CI](https://github.com/laramies/theHarvester/workflows/TheHarvester%20Docker%20Image%20CI/badge.svg)
 [![Rawsec's CyberSecurity Inventory](https://inventory.raw.pm/img/badges/Rawsec-inventoried-FF5050_flat_without_logo.svg)](https://inventory.raw.pm/)
 
-[![Packaging status](https://repology.org/badge/vertical-allrepos/theharvester.svg)](https://repology.org/project/theharvester/versions)
 
 About
 -----
@@ -11,6 +10,9 @@ theHarvester is a simple to use, yet powerful tool designed to be used during th
 team assessment or penetration test. It performs open source intelligence (OSINT) gathering to help determine
 a domain's external threat landscape. The tool gathers names, emails, IPs, subdomains, and URLs by using
 multiple public resources that include:
+
+## Package versions
+[![Packaging status](https://repology.org/badge/vertical-allrepos/theharvester.svg)](https://repology.org/project/theharvester/versions)
 
 Install and dependencies
 ------------------------
@@ -193,8 +195,6 @@ Documentation to setup API keys can be found at - https://github.com/laramies/th
 * windvane - 100 free queries
 * zoomeye - 5 free results/day. 30/results/day $190/yr
 
-## Package versions
-[![Packaging status](https://repology.org/badge/vertical-allrepos/theharvester.svg)](https://repology.org/project/theharvester/versions)
 
 Comments, bugs, and requests
 ----------------------------
