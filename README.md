@@ -60,6 +60,8 @@ uv run ruff check
 uv run ruff format
 ```
 
+To protect the optional `/additional/*` REST API routes, set `THEHARVESTER_API_KEY` and pass the same value in the `X-API-Key` header. Those routes return `503` when the key is not configured.
+
 Passive modules
 ---------------
 

@@ -633,7 +633,7 @@ class SearchApiEndpoints:
                 tech_stack.append(tech)
 
             # Try to extract potential parameters from response
-            parameters = []
+            parameters: list[str] = []
 
             if 'json' in content_type.lower() and content:
                 try:
@@ -641,7 +641,7 @@ class SearchApiEndpoints:
 
                     # Extract top-level keys as potential parameters
                     if isinstance(json_data, dict):
-                        parameters = list(json_data.keys())
+                        parameters = [key for key in json_data if isinstance(key, str)]
                     else:
                         self.logger.error(f'JSON response is not a dictionary. Type: {type(json_data).__name__}')
 
@@ -745,7 +745,7 @@ class SearchApiEndpoints:
     def _get_tech_stack_summary(self) -> dict[str, int]:
         """Summarize detected technologies."""
         summary: dict[str, int] = {}
-        for url, techs in self.tech_stack.items():
+        for _url, techs in self.tech_stack.items():
             for tech in techs:
                 summary[tech] = summary.get(tech, 0) + 1
         return summary

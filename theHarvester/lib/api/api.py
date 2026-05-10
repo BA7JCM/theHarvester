@@ -197,8 +197,8 @@ class DnsBruteResponse(BaseModel):
 @limiter.limit(API_RATE_LIMIT)
 async def dnsbrute(
     request: Request,
+    domain: Annotated[str, Query(min_length=3, description='Domain to be brute forced')],
     user_agent: Annotated[str | None, Header()] = None,
-    domain: Annotated[str, Query(description='Domain to be brute forced')] = ...,
     dns_resolve: Annotated[
         str, Query(description='Perform DNS resolution on subdomains with a resolver list or passed in resolvers')
     ] = '',
@@ -271,6 +271,8 @@ async def dnsbrute(
 @limiter.limit(API_RATE_LIMIT)
 async def query(
     request: Request,
+    source: Annotated[list[str], Query(description='Data sources to query (comma separated with no space)')],
+    domain: Annotated[str, Query(min_length=3, description='Domain to be harvested')],
     dns_server: Annotated[str, Query(description='DNS server to use for lookup')] = '',
     user_agent: Annotated[str | None, Header()] = None,
     dns_brute: Annotated[bool, Query(description='Perform a DNS brute force on the domain')] = False,
@@ -284,10 +286,8 @@ async def query(
     take_over: Annotated[bool, Query(description='Check for takeovers')] = False,
     wordlist: Annotated[str, Query(description='Specify a wordlist for API endpoint scanning')] = '',
     api_scan: Annotated[bool, Query(description='Scan for API endpoints')] = False,
-    source: Annotated[list[str], Query(description='Data sources to query (comma separated with no space)')] = ...,
     limit: Annotated[int, Query(description='Limit the number of search results')] = 500,
     start: Annotated[int, Query(description='Start with result number X')] = 0,
-    domain: Annotated[str, Query(description='Domain to be harvested')] = ...,
 ) -> Response:
     """Query function that allows user to query theHarvester rest API.
 

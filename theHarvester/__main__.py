@@ -1042,10 +1042,10 @@ async def start(rest_args: argparse.Namespace | None = None):
 
                         # For normal module usage, we need to create a wrapper that works with the store function
                         class ShodanWrapper:
-                            def __init__(self, domain):
+                            def __init__(self, domain, shodan_client):
                                 self.word = domain
                                 self.hosts = set()
-                                self.shodan = shodan_search
+                                self.shodan = shodan_client
 
                             async def process(self, use_proxy: bool = False):
                                 import socket
@@ -1071,7 +1071,7 @@ async def start(rest_args: argparse.Namespace | None = None):
                             async def get_hostnames(self):
                                 return list(self.hosts)
 
-                        shodan_wrapper = ShodanWrapper(word)
+                        shodan_wrapper = ShodanWrapper(word, shodan_search)
                         stor_lst.append(store(shodan_wrapper, engineitem, store_host=True))
                     except Exception as e:
                         if isinstance(e, MissingKey):
@@ -1347,7 +1347,7 @@ async def start(rest_args: argparse.Namespace | None = None):
             queue.put_nowait(stor_method)
         # Create three worker tasks to process the queue concurrently.
         tasks = []
-        for i in range(3):
+        for _i in range(3):
             task = asyncio.create_task(worker(queue))
             tasks.append(task)
 
@@ -1641,7 +1641,7 @@ async def start(rest_args: argparse.Namespace | None = None):
                     # Process the results if it's a dictionary
                     if isinstance(shodandict[ip], dict):
                         rowdata = []
-                        for key, value in shodandict[ip].items():
+                        for _key, value in shodandict[ip].items():
                             if isinstance(value, int):
                                 value = str(value)
                             if isinstance(value, list):

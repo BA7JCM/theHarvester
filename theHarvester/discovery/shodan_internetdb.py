@@ -36,9 +36,10 @@ class SearchShodanInternetDB:
 
         # Deduplicate IPs from the resolution results
         resolved_ips: set[str] = set()
-        for family, _type, _proto, _canonname, sockaddr in addr_infos:
+        for _family, _type, _proto, _canonname, sockaddr in addr_infos:
             ip = sockaddr[0]
-            resolved_ips.add(ip)
+            if isinstance(ip, str):
+                resolved_ips.add(ip)
 
         if not resolved_ips:
             print(f'Shodan InternetDB: No IPs resolved for {self.word}')

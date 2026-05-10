@@ -687,7 +687,7 @@ class AsyncFetcher:
                         await asyncio.gather(
                             *[
                                 AsyncFetcher.takeover_fetch(session, url, proxy=proxy_url)
-                                for url, proxy_url in zip(urls, proxy_urls)
+                                for url, proxy_url in zip(urls, proxy_urls, strict=False)
                             ]
                         )
                     )
@@ -708,7 +708,7 @@ class AsyncFetcher:
                                     json=json,
                                     proxy=proxy_url,
                                 )
-                                for url, (proxy_url, proxy_type) in zip(urls, proxy_data)
+                                for url, (proxy_url, proxy_type) in zip(urls, proxy_data, strict=False)
                             ]
                         )
                     )
@@ -729,7 +729,7 @@ class AsyncFetcher:
                                     json,
                                     proxy=proxy_url,
                                 )
-                                for url, (proxy_url, proxy_type) in zip(urls, proxy_data)
+                                for url, (proxy_url, proxy_type) in zip(urls, proxy_data, strict=False)
                             ]
                         )
                     )
