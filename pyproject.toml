@@ -132,18 +132,17 @@ select = ["E",
     "N",
     "I",
     "UP",
-    "TCH",
     "FA",
+    "FAST",
     "RUF",
     "PT",
     "TC",
+    "FURB",
     "ASYNC"
     ]
 ignore = [
     "E501",
-    "ASYNC230",
     "N999",
-    "PLR0915"
     ]
 
 # Allow fix for all enabled rules (when `--fix`) is provided.

@@ -265,8 +265,7 @@ class Core:
 
     @staticmethod
     def get_supportedengines() -> list[str]:
-        """
-        Returns a list of supported search engines.
+        """Returns a list of supported search engines.
         """
         return [
             'baidu',
@@ -403,7 +402,7 @@ class AsyncFetcher:
 
     @staticmethod
     def _default_headers(headers: dict[str, str] | None = None) -> dict[str, str]:
-        return headers if headers else {'User-Agent': Core.get_user_agent()}
+        return headers or {'User-Agent': Core.get_user_agent()}
 
     @staticmethod
     def _ssl_context(verify: bool | None = True) -> ssl.SSLContext | bool:
@@ -471,8 +470,7 @@ class AsyncFetcher:
 
     @staticmethod
     def _get_random_proxy(proxy_dict: dict) -> tuple[str | None, str | None]:
-        """
-        Get a random proxy from the proxy dictionary.
+        """Get a random proxy from the proxy dictionary.
         Returns (proxy_url, proxy_type) where proxy_type is 'http' or 'socks5'
         """
         all_proxies = []
@@ -490,8 +488,7 @@ class AsyncFetcher:
     async def _create_connector(
         proxy_url: str | None, proxy_type: str | None, ssl_context: ssl.SSLContext | bool | None = None
     ) -> aiohttp.BaseConnector:
-        """
-        Create an appropriate connector for the given proxy type.
+        """Create an appropriate connector for the given proxy type.
         Returns a connector that can be used with aiohttp.ClientSession.
         """
         if proxy_url and proxy_type == 'socks5':
@@ -501,7 +498,7 @@ class AsyncFetcher:
             return connector
         else:
             # Use default TCP connector for HTTP proxies or no proxy
-            return aiohttp.TCPConnector(ssl=ssl_context if ssl_context else ssl.create_default_context(cafile=certifi.where()))
+            return aiohttp.TCPConnector(ssl=ssl_context or ssl.create_default_context(cafile=certifi.where()))
 
     @classmethod
     async def post_fetch(
@@ -582,8 +579,7 @@ class AsyncFetcher:
         follow_redirects: bool | None = None,
         request_timeout: int | None = None,
     ) -> Any:
-        """
-        Generic HTTP request helper.
+        """Generic HTTP request helper.
         - If a session is not provided, one will be created and closed automatically.
         - Supports optional headers, method selection, proxy, ssl verification, redirects and timeout.
         - Returns response text or json depending on `json` flag.

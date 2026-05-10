@@ -259,8 +259,8 @@ async def start(rest_args: argparse.Namespace | None = None):
         # 1.1.1.1,8.8.8.8 or 1.1.1.1, 8.8.8.8
         # resolvers.txt
         if await anyio.Path(dnsresolve).exists():
-            with open(dnsresolve, encoding='UTF-8') as fp:
-                for line in fp:
+            async with await anyio.open_file(dnsresolve, encoding='UTF-8') as fp:
+                async for line in fp:
                     line = line.strip()
                     if len(line) == 0:
                         continue
@@ -327,8 +327,7 @@ async def start(rest_args: argparse.Namespace | None = None):
         store_interestingurls: bool = False,
         store_asns: bool = False,
     ) -> None:
-        """
-        Persist details into the database.
+        """Persist details into the database.
         The details to be stored are controlled by the parameters passed to the method.
 
         :param search_engine: search engine to fetch details from
@@ -1630,30 +1629,29 @@ async def start(rest_args: argparse.Namespace | None = None):
                 filename = filename.rsplit('.', 1)[0] + '.xml'
             else:
                 filename = 'theHarvester/app/static/' + rest_filename.rsplit('.', 1)[0] + '.xml'
-            # TODO use aiofiles if user is using rest api
             # XML REPORT SECTION
-            with open(filename, 'w+') as file:
-                file.write('<?xml version="1.0" encoding="UTF-8"?><theHarvester>')
+            async with await anyio.open_file(filename, 'w+') as file:
+                await file.write('<?xml version="1.0" encoding="UTF-8"?><theHarvester>')
                 sanitized_args = [sanitize_for_xml(f'"{arg}"' if ' ' in arg else arg) for arg in sys.argv[1:]]
-                file.write('<cmd>' + ' '.join(sanitized_args) + '</cmd>')
-                for x in all_emails:
-                    file.write('<email>' + sanitize_for_xml(x) + '</email>')
+                await file.write('<cmd>' + ' '.join(sanitized_args) + '</cmd>')
+                for email in all_emails:
+                    await file.write('<email>' + sanitize_for_xml(email) + '</email>')
                 for x in full:
                     host, ip = x.split(':', 1) if ':' in x else (x, '')
                     if ip and len(ip) > 3:
-                        file.write(f'<host><ip>{sanitize_for_xml(ip)}</ip><hostname>{sanitize_for_xml(host)}</hostname></host>')
+                        await file.write(f'<host><ip>{sanitize_for_xml(ip)}</ip><hostname>{sanitize_for_xml(host)}</hostname></host>')
                     else:
-                        file.write(f'<host>{sanitize_for_xml(host)}</host>')
+                        await file.write(f'<host>{sanitize_for_xml(host)}</host>')
                 for x in vhost:
                     host, ip = x.split(':', 1) if ':' in x else (x, '')
                     if ip and len(ip) > 3:
-                        file.write(
+                        await file.write(
                             f'<vhost><ip>{sanitize_for_xml(ip)} </ip><hostname>{sanitize_for_xml(host)}</hostname></vhost>'
                         )
                     else:
-                        file.write(f'<vhost>{sanitize_for_xml(host)}</vhost>')
+                        await file.write(f'<vhost>{sanitize_for_xml(host)}</vhost>')
                 # TODO add Shodan output into XML report
-                file.write('</theHarvester>')
+                await file.write('</theHarvester>')
                 print('[*] XML File saved.')
         except (OSError, ValueError, TypeError, UnicodeEncodeError) as error:
             print(f'[!] An error occurred while saving the XML file: {error}')
@@ -1709,9 +1707,9 @@ async def start(rest_args: argparse.Namespace | None = None):
                 json_dict['takeover_results'] = takeover_results
 
             json_dict['shodan'] = shodanres
-            with open(filename, 'w+') as fp:
+            async with await anyio.open_file(filename, 'w+') as fp:
                 dumped_json = ujson.dumps(json_dict, sort_keys=True)
-                fp.write(dumped_json)
+                await fp.write(dumped_json)
             print('[*] JSON File saved.')
         except (OSError, ValueError, TypeError, UnicodeEncodeError) as er:
             print(f'[!] An error occurred while saving the JSON file: {er} ')
@@ -1721,7 +1719,7 @@ async def start(rest_args: argparse.Namespace | None = None):
     if args.api_scan or 'api_endpoints' in engines:
         try:
             # Define a default wordlist if none is specified
-            wordlist = args.wordlist if args.wordlist else str(DATA_DIR / 'wordlists' / 'api_endpoints.txt')
+            wordlist = args.wordlist or str(DATA_DIR / 'wordlists' / 'api_endpoints.txt')
 
             if not await anyio.Path(wordlist).exists():
                 print(f'\n[!] Wordlist not found: {wordlist}')
@@ -1749,8 +1747,8 @@ async def start(rest_args: argparse.Namespace | None = None):
                     '/debug',
                 ]
                 temp_wordlist = str(DATA_DIR / 'wordlists' / 'temp_api_endpoints.txt')
-                with open(temp_wordlist, 'w') as f:
-                    f.write('\n'.join(basic_endpoints))
+                async with await anyio.open_file(temp_wordlist, 'w') as f:
+                    await f.write('\n'.join(basic_endpoints))
                 wordlist = temp_wordlist
                 print(f'Basic API wordlist created with {len(basic_endpoints)} endpoints.')
 

@@ -1,5 +1,4 @@
-"""
-API endpoint scanner module.
+"""API endpoint scanner module.
 This module contains the SearchApiEndpoints class that performs comprehensive API endpoint
 scanning, detection, and analysis on target domains with advanced features for security testing.
 """
@@ -48,8 +47,7 @@ class EndpointResult:
 
 
 class SearchApiEndpoints:
-    """
-    SearchApiEndpoints class for scanning common API endpoints on target domains.
+    """SearchApiEndpoints class for scanning common API endpoints on target domains.
     """
 
     def __init__(
@@ -64,8 +62,7 @@ class SearchApiEndpoints:
         verify_ssl: bool = True,
         additional_headers: dict[str, str] | None = None,
     ) -> None:
-        """
-        Initialize the SearchApiEndpoints class with advanced configuration options.
+        """Initialize the SearchApiEndpoints class with advanced configuration options.
 
         Args:
             word: The target domain to scan
@@ -77,6 +74,7 @@ class SearchApiEndpoints:
             follow_redirects: Whether to follow HTTP redirects
             verify_ssl: Whether to verify SSL certificates
             additional_headers: Additional HTTP headers to include in requests
+
         """
         self.word = word
         self.hosts: set[str] = set()
@@ -104,7 +102,7 @@ class SearchApiEndpoints:
         default_wordlist = os.path.join(
             os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'wordlists', 'api_endpoints.txt'
         )
-        self.wordlist = wordlist if wordlist else default_wordlist
+        self.wordlist = wordlist or default_wordlist
 
         # Add comprehensive API paths categorized by functionality
         self.common_api_paths = [
@@ -390,8 +388,7 @@ class SearchApiEndpoints:
         self.logger = logger
 
     async def do_search(self) -> None:
-        """
-        Perform the API endpoint scan with advanced features.
+        """Perform the API endpoint scan with advanced features.
         """
         try:
             self.logger.info(f'Starting API endpoint scan for {self.word}')
@@ -480,14 +477,14 @@ class SearchApiEndpoints:
             return []
 
     async def _check_endpoint(self, url: str) -> EndpointResult | None:
-        """
-        Check if an endpoint exists and analyze its properties.
+        """Check if an endpoint exists and analyze its properties.
 
         Args:
             url: The URL to check.
 
         Returns:
             Optional[EndpointResult]: Result object or None if not found
+
         """
         methods = ['GET', 'POST', 'OPTIONS', 'HEAD', 'PUT', 'DELETE', 'PATCH']
         headers = self._get_headers()
@@ -542,11 +539,11 @@ class SearchApiEndpoints:
         return headers
 
     def _process_response(self, url: str, method: str, response, response_time: float) -> EndpointResult | None:
-        """
-        Process and categorize API endpoint response with detailed analysis.
+        """Process and categorize API endpoint response with detailed analysis.
 
         Returns:
             Optional[EndpointResult]: Result object or None if not relevant
+
         """
         status = getattr(response, 'status', 0)
         if status == 0:
@@ -727,11 +724,11 @@ class SearchApiEndpoints:
             self.logger.info(f'Identified {len(path_patterns)} API path patterns for potential further scanning')
 
     def get_results_summary(self) -> dict[str, Any]:
-        """
-        Get a comprehensive summary of scan results.
+        """Get a comprehensive summary of scan results.
 
         Returns:
             Dict[str, Any]: Summary of scan results
+
         """
         return {
             'target': self.word,
@@ -756,11 +753,11 @@ class SearchApiEndpoints:
         return summary
 
     def get_detailed_results(self) -> list[dict[str, Any]]:
-        """
-        Get detailed results for all endpoints.
+        """Get detailed results for all endpoints.
 
         Returns:
             List[Dict[str, Any]]: List of endpoint result dictionaries
+
         """
         return [result.to_dict() for result in self.found_endpoints.values()]
 
@@ -813,8 +810,7 @@ class SearchApiEndpoints:
         return self.schema_detected
 
     def export_results(self, output_file: str | None = None, format: str = 'json') -> str | dict | None:
-        """
-        Export scan results to a file or return as string/dict.
+        """Export scan results to a file or return as string/dict.
 
         Args:
             output_file: Optional file path to save results
@@ -822,6 +818,7 @@ class SearchApiEndpoints:
 
         Returns:
             Union[str, Dict, None]: Results in requested format or None if saved to file
+
         """
         results = {'summary': self.get_results_summary(), 'endpoints': self.get_detailed_results()}
 

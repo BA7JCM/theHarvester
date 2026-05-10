@@ -1,3 +1,5 @@
+from typing import Annotated
+
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
@@ -13,7 +15,7 @@ class DomainRequest(BaseModel):
 
 
 @router.post('/breaches')
-async def get_breaches(request: DomainRequest, api_key: str = Depends(get_api_key)):
+async def get_breaches(request: DomainRequest, api_key: Annotated[str, Depends(get_api_key)]):
     """Get breach information for a domain using HaveIBeenPwned."""
     try:
         apis = AdditionalAPIs(request.domain, request.api_keys or {})
@@ -25,7 +27,7 @@ async def get_breaches(request: DomainRequest, api_key: str = Depends(get_api_ke
 
 
 @router.post('/leaks')
-async def get_leaks(request: DomainRequest, api_key: str = Depends(get_api_key)):
+async def get_leaks(request: DomainRequest, api_key: Annotated[str, Depends(get_api_key)]):
     """Get leaked credentials for a domain using Leak-Lookup."""
     try:
         apis = AdditionalAPIs(request.domain, request.api_keys or {})
@@ -37,7 +39,7 @@ async def get_leaks(request: DomainRequest, api_key: str = Depends(get_api_key))
 
 
 @router.post('/security-score')
-async def get_security_score(request: DomainRequest, api_key: str = Depends(get_api_key)):
+async def get_security_score(request: DomainRequest, api_key: Annotated[str, Depends(get_api_key)]):
     """Get security scorecard for a domain."""
     try:
         apis = AdditionalAPIs(request.domain, request.api_keys or {})
@@ -49,7 +51,7 @@ async def get_security_score(request: DomainRequest, api_key: str = Depends(get_
 
 
 @router.post('/tech-stack')
-async def get_tech_stack(request: DomainRequest, api_key: str = Depends(get_api_key)):
+async def get_tech_stack(request: DomainRequest, api_key: Annotated[str, Depends(get_api_key)]):
     """Get technology stack information for a domain using BuiltWith."""
     try:
         apis = AdditionalAPIs(request.domain, request.api_keys or {})
@@ -61,7 +63,7 @@ async def get_tech_stack(request: DomainRequest, api_key: str = Depends(get_api_
 
 
 @router.post('/all')
-async def get_all_info(request: DomainRequest, api_key: str = Depends(get_api_key)):
+async def get_all_info(request: DomainRequest, api_key: Annotated[str, Depends(get_api_key)]):
     """Get all additional information for a domain."""
     try:
         apis = AdditionalAPIs(request.domain, request.api_keys or {})
