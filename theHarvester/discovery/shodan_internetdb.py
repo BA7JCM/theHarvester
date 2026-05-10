@@ -83,7 +83,13 @@ class SearchShodanInternetDB:
                     self.cpes.add(cpe)
 
             # Add the IP if there was any data
-            if response.get('hostnames') or response.get('ports') or response.get('vulns') or response.get('tags') or response.get('cpes'):
+            if (
+                response.get('hostnames')
+                or response.get('ports')
+                or response.get('vulns')
+                or response.get('tags')
+                or response.get('cpes')
+            ):
                 ip_str = response.get('ip', '')
                 if ip_str:
                     self.totalips.add(str(ip_str))
