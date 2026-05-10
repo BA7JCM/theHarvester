@@ -1313,7 +1313,9 @@ async def start(rest_args: argparse.Namespace | None = None):
                 queue.task_done()
                 # Notify the queue that the "work item" has been processed.
             except Exception as work_item_error:
-                print(f'\n An error occurred while processing a "work item": {type(work_item_error).__name__}: {work_item_error}\n')
+                print(
+                    f'\n An error occurred while processing a "work item": {type(work_item_error).__name__}: {work_item_error}\n'
+                )
                 queue.task_done()
 
     async def handler(lst):
