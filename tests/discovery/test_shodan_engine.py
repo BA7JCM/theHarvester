@@ -39,6 +39,6 @@ class TestShodanEngine:
         assert excinfo.value.code == 0
 
         out = capsys.readouterr().out
-        assert 'A error occurred while processing a "work item"' not in out
+        assert 'An error occurred while processing a "work item"' not in out
         assert "a.example.com" in out
         assert "b.example.com" in out
