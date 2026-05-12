@@ -310,7 +310,6 @@ class Core:
             'otx',
             'pentesttools',
             'projectdiscovery',
-            'qwant',
             'rapiddns',
             'robtex',
             'rocketreach',
